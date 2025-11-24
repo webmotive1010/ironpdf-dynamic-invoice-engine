@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Estimate</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow: auto;
+        }
+
+        body {
+            font-family: Roboto;
+            color: #333;
+            background-color: rgb(236, 240, 241);
+            overflow: hidden;
+        }
+
+        .a1-page {
+            position: relative;
+            width: 708px;
+            height: 999px;
+            padding: 40px;
+            margin: auto;
+            background-color: #ffffff;
+        }
+
+        .a1-header {
+            width: 100%;
+        }
+
+        .a1-tenant-logo-wrap {
+            text-align: right;
+            width: 100%;
+            height: 48px;
+        }
+
+        .a1-tenant-logo {
+            width: 200px;
+            height: 48px;
+            float: right;
+        }
+
+        .a1-customer-tenant-wrap {
+            clear: both;
+            margin-top: 2rem;
+            height: 118px;
+            width: 100%;
+        }
+
+        .a1-customer-info {
+            float: left;
+            font-size: 14px;
+            font-weight: var(--font-weight-regular);
+        }
+
+        .a1-tenant-info {
+            float: right;
+            text-align: right;
+            font-size: 14px;
+            font-weight: var(--font-weight-regular);
+        }
+
+        .a1-prompt-row {
+            clear: both;
+            padding-top: 2rem;
+        }
+
+        .a1-prompt {
+            float: left;
+            box-sizing: border-box;
+        }
+
+        .a1-prompt-label {
+            font-family: "Roboto";
+            font-weight: var(--font-weight-regular);
+            font-size: 14px;
+            letter-spacing: 0;
+            color: #767879;
+        }
+
+        .a1-prompt-value {
+            font-family: "Roboto";
+            font-weight: var(--font-weight-regular);
+            font-size: 14px;
+            letter-spacing: 0;
+            color: #000000;
+        }
+
+        .a1-title {
+            clear: both;
+            font-size: 28px;
+            font-weight: var(--font-weight-bold);
+            padding-top: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        tr {
+            height: 26px;
+        }
+
+        table th,
+        table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        table th {
+            background-color: #f5f5f5;
+            font-weight: var(--font-weight-bold);
+        }
+
+        .summary tr {
+            height: 26px;
+        }
+
+        .summary td {
+            font-size: 14px;
+            font-weight: var(--font-weight-regular);
+            border: none;
+            text-align: left;
+            padding: 2px 8px;
+        }
+
+            .summary td:first-child {
+                text-align: left;
+            }
+
+        .a1-footer {
+            clear: both;
+            width: 628px;
+            height: auto;
+            vertical-align: bottom;
+            font-size: 12px;
+            position: absolute;
+            bottom: 40px;
+        }
+
+        .a1-terms {
+            font-weight: var(--font-weight-bold);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a1-page">
+
+        <header class="a1-header">
+            <div class="a1-tenant-logo-wrap">
+                <img alt="" src="/images/customer-logo.png" class="a1-tenant-logo" />
+            </div>
+            <div class="a1-customer-tenant-wrap">
+                <div class="a1-customer-info">
+                    <strong>{{Contact.Name}}</strong><br>
+                    {{Contact.CustomerAddress}}<br>
+                    {{Contact.PostCode}} {{Contact.City}}<br>
+                    {{Contact.Company.CvrNumber}}
+                </div>
+                <div class="a1-tenant-info">
+                    <strong>CrossArtist ApS</strong><br>
+                    N W Larsens Vej 10 Langesø<br>
+                    3080 Tikøb<br>
+                    CVR-nr. DK44953161<br>
+                    Tlf. 12 34 56 78<br>
+                    hello@acconta.com<br>
+                    www.acconta.com
+                </div>
+            </div>
+        </header>
+
+        <section class="a1-prompt-row">
+            <div class="a1-prompt" style="width: 25%">
+                <div class="a1-prompt-label">{{label:Name}}</div>
+                <div class="a1-prompt-value">{{Contact.Name}}</div>
+            </div>
+            <div class="a1-prompt" style="width: 25%">
+                <div class="a1-prompt-label">{{label:Project}}</div>
+                <div class="a1-prompt-value">Name of project</div>
+            </div>
+        </section>
+
+        <section class="a1-prompt-row">
+            <div class="a1-prompt" style="width: 25%">
+                <div class="a1-prompt-label">{{label:Date}}</div>
+                <div class="a1-prompt-value">{{Quote.AgreementDate}}</div>
+            </div>
+            <div class="a1-prompt" style="width: 25%">
+                <div class="a1-prompt-label">{{label:ValidTo}}</div>
+                <div class="a1-prompt-value">{{Quote.ExpiryDate}}</div>
+            </div>
+            <div class="a1-prompt" style="width: 25%">
+                <div class="a1-prompt-label">{{label:YourReference}}:</div>
+                <div class="a1-prompt-value">{{Quote.YourReference}}</div>
+            </div>
+            <div class="a1-prompt" style="width: 25%">
+                <div class="a1-prompt-label">{{label:Number}}</div>
+                <div class="a1-prompt-value">{{Quote.SerialNumber}}</div>
+            </div>
+        </section>
+
+        <div class="a1-title">{{label:Estimate}}</div>
+        <section class="items">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{label:Id}}</th>
+                        <th>{{label:Description}}</th>
+                        <th>{{label:Quantity}}</th>
+                        <th>{{label:Unit}}</th>
+                        <th style="text-align: right;">{{label:UnitPrice}}</th>
+                        <th style="text-align: right;">{{label:Discount}}</th>
+                        <th style="text-align: right;">{{label:Price}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#Items}}
+                    <tr>
+                        <td>{{ItemCode}}</td>
+                        <td>{{Name}}</td>
+                        <td>{{Quantity}}</td>
+                        <td>{{Unit}}</td>
+                        <td style="text-align: right;">{{UnitPrice}}</td>
+                        <td style="text-align: right;">{{Discount}}</td>
+                        <td style="text-align: right;">{{Amount}}</td>
+                    </tr>
+                    {{/Items}}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="summary">
+            <table>
+                <tr>
+                    <td></td>
+                    <td style="width: 128px;">{{label:SubTotal}}</td>
+                    <td style="width: 128px; text-align: right;">{{SalesTotals.TotalLineAmount}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="width: 128px;">{{label:Vat}}</td>
+                    <td style="width: 128px; text-align: right;">{{SalesTotals.TotalVat}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="width: 128px;">{{label:Discount}}</td>
+                    <td style="width: 128px; text-align: right;">{{SalesTotals.Discount}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="width: 128px; border-bottom: solid 2px #000;"><strong>{{label:Total}}</strong></td>
+                    <td style="width: 128px; border-bottom: solid 2px #000; text-align: right;"><strong>{{SalesTotals.TotalAmountInclVat}}</strong></td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="a1-prompt-row">
+            <div class="a1-prompt">
+                <div class="a1-prompt-label">{{label:Notes}}</div>
+                <div class="a1-prompt-value">{{Quote.Notes}}</div>
+            </div>
+        </section>
+        <div class="a1-footer">
+            <div class="a1-terms">Terms:<br>Net 10 days</div>
+            <p>
+                Please pay via credit card/ACH link or mail your check to our address. Also include our invoice no. 160572 with
+                payment, please.<br><br>
+                Please be advised that we will charge 1% interest per month on invoices overdue.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,492 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Invoice</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Roboto, sans-serif;
+            color: #333;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .invoice-page {
+            position: relative;
+            max-width: 788px;
+            height: 999px;
+            margin: auto;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 35px 45px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .header-banner::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -10%;
+                width: 80%;
+                height: 200%;
+                background: repeating-linear-gradient( 45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.03) 20px, rgba(255, 255, 255, 0.03) 40px );
+                transform: rotate(-45deg);
+            }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .company-info {
+            flex: 1;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+            .logo-container img {
+                width: 200px;
+                height: 48px;
+                background: white;
+                padding: 5px;
+                border-radius: 3px;
+            }
+
+        .company-details {
+            font-size: 12px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .invoice-info {
+            text-align: right;
+        }
+
+        .invoice-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            letter-spacing: 2px;
+        }
+
+        .invoice-meta {
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .invoice-meta-label {
+            display: inline-block;
+            width: 90px;
+            opacity: 0.8;
+        }
+
+        .content-area {
+            padding: 35px 45px 180px 45px;
+        }
+
+        .billing-shipping {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .address-box {
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .address-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-reference {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .info-field {
+            font-size: 13px;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #7f8c8d;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            color: #2c3e50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 13px;
+        }
+
+            table thead {
+                background-color: #34495e;
+                color: white;
+            }
+
+            table th {
+                padding: 12px 10px;
+                text-align: left;
+                font-weight: 600;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+                table th:first-child {
+                    width: 60px;
+                    text-align: center;
+                }
+
+            table td {
+                padding: 12px 10px;
+                border-bottom: 1px solid #ecf0f1;
+                color: #555;
+            }
+
+                table td:first-child {
+                    text-align: center;
+                    font-weight: 600;
+                    color: #2c3e50;
+                }
+
+            table tbody tr:hover {
+                background-color: #f8f9fa;
+            }
+
+        .amount-cell {
+            text-align: right;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .summary-table {
+            margin-top: 20px;
+            border-top: 2px solid #34495e;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: flex-end;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .summary-label {
+            width: 120px;
+            text-align: right;
+            padding-right: 20px;
+            color: #555;
+        }
+
+        .summary-value {
+            width: 140px;
+            text-align: right;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .summary-row.total {
+            background-color: #34495e;
+            color: white;
+            padding: 15px 10px;
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+            .summary-row.total .summary-label,
+            .summary-row.total .summary-value {
+                color: white;
+            }
+
+        .payment-notes-section {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .payment-info-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+            font-size: 12px;
+        }
+
+        .payment-title {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .payment-details {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .payment-label {
+            font-weight: 600;
+            display: inline-block;
+            width: 100px;
+        }
+
+        .notes-box {
+            background-color: #fef5e7;
+            padding: 20px;
+            border-left: 4px solid #f39c12;
+            font-size: 12px;
+        }
+
+        .notes-title {
+            font-weight: 700;
+            color: #d68910;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .notes-content {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .footer-section {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            padding: 25px 45px;
+            border-top: 3px solid #34495e;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .thank-you {
+            font-size: 13px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            font-size: 11px;
+            color: #7f8c8d;
+            text-align: right;
+            line-height: 1.6;
+        }
+
+        .terms-footer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 11px;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+            .terms-footer strong {
+                color: #2c3e50;
+                font-size: 12px;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-page">
+
+        <div class="header-banner">
+            <div class="header-content">
+                <div class="company-info">
+                    <div class="logo-container">
+                        {{logo}}
+                    </div>
+                    <div class="company-details">
+                        <strong>{{From.Name}}</strong><br>
+                        {{From.AddressLine1}}<br>
+                        {{From.PostCode}} {{From.City}}<br>
+                        {{From.CVR}}
+                    </div>
+                </div>
+                <div class="invoice-info">
+                    <div class="invoice-title">{{label:Invoice}}</div>
+                    <div class="invoice-meta">
+                        <span class="invoice-meta-label">Ref No:</span> <strong>{{InvoiceNumber}}</strong><br>
+                        <span class="invoice-meta-label">{{label:Date}}:</span> {{Date}}<br>
+                        <span class="invoice-meta-label">{{label:DueDate}}:</span> {{DueDate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+
+            <div class="billing-shipping">
+                <div class="address-box">
+                    <div class="address-title">Billed To:</div>
+                    <strong>{{To.Name}}</strong><br>
+                    {{To.AddressLine1}}<br>
+                    {{To.AddressLine2}}<br>
+                    {{To.City}}<br>
+                    {{To.Phone}}<br>
+                    {{To.Email}}
+                </div>
+                <div class="address-box">
+                    <div class="address-title">Ship To:</div>
+                    <strong>{{To.Name}}</strong><br>
+                    {{To.AddressLine1}}<br>
+                    {{To.AddressLine2}}<br>
+                    {{To.City}}<br>
+                    {{To.Website}}
+                </div>
+            </div>
+
+            <div class="project-reference">
+                <div class="info-field">
+                    <div class="info-label">{{label:Project}}</div>
+                    <div class="info-value">{{ProjectName}}</div>
+                </div>
+                <div class="info-field">
+                    <div class="info-label">{{label:YourReference}}</div>
+                    <div class="info-value">{{YourReference}}</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{label:Id}}</th>
+                        <th>{{label:Description}}</th>
+                        <th>{{label:Quantity}}</th>
+                        <th>{{label:Unit}}</th>
+                        <th style="text-align: right;">{{label:UnitPrice}}</th>
+                        <th style="text-align: right;">{{label:Discount}}</th>
+                        <th style="text-align: right;">{{label:Price}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#Items}}
+                    <tr>
+                        <td>{{Id}}</td>
+                        <td>{{Description}}</td>
+                        <td>{{Quantity}}</td>
+                        <td>{{Unit}}</td>
+                        <td class="amount-cell">{{UnitPrice}}</td>
+                        <td class="amount-cell">{{Discount}}</td>
+                        <td class="amount-cell">{{Price}}</td>
+                    </tr>
+                    {{/Items}}
+                </tbody>
+            </table>
+
+            <div class="summary-table">
+                <div class="summary-row">
+
+                    {{#if SubTotal > 1200}}
+                        <div class="warning">High value invoice</div>
+                    {{else}}
+                        <span>Regular Customer</span>
+                    {{/if}}
+
+                    <div class="summary-label">{{label:SubTotal}}</div>
+                    <div class="summary-value">{{SubTotal}}</div>
+
+
+                </div>
+                <div class="summary-row">
+                    <div class="summary-label">{{label:Vat}}</div>
+                    <div class="summary-value">{{Vat}}</div>
+                </div>
+                <div class="summary-row">
+                    <div class="summary-label">{{label:Discount}}</div>
+                    <div class="summary-value">{{Discount}}</div>
+                </div>
+                <div class="summary-row total">
+                    <div class="summary-label">{{label:Total}}</div>
+                    <div class="summary-value">{{Total}}</div>
+                </div>
+            </div>
+
+            <div class="payment-notes-section">
+                <div class="payment-info-box">
+                    <div class="payment-title">Payment Info</div>
+                    <div class="payment-details">
+                        <span class="payment-label">{{label:Name}}:</span> {{From.Name}}<br>
+                        <span class="payment-label">Due Date:</span> {{DueDate}}
+                    </div>
+                </div>
+                <div class="notes-box">
+                    <div class="notes-title">{{label:Notes}}</div>
+                    <div class="notes-content">{{Notes}}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-section">
+            <div class="footer-content">
+                <div class="thank-you">
+                    Thank you for choosing our services
+                </div>
+                <div class="contact-info">
+                    Email: {{To.Email}}<br>
+                    Website: {{To.Website}}<br>
+                    Tel: {{To.Phone}}
+                </div>
+            </div>
+            <div class="terms-footer">
+                <strong>Terms:</strong> {{Terms.TextLine1}}<br>
+                {{Terms.BankInfo}}<br>
+                {{Terms.ExtraInfo}}
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
